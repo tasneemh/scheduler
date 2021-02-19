@@ -90,9 +90,11 @@ const setDays = days => {
   }, []);
    
   const schedule = dailyAppointments.map(appointment=>{
+    //const interview = getInterview(state, appointment.interview);
     return <Appointment
     key={appointment.id} 
     //{...appointment}
+    id = {appointment.id}
     interview = {appointment.interview}
     time= {appointment.time}
     />

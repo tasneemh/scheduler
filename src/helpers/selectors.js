@@ -25,10 +25,23 @@ const state = {
       time: "4pm",
       interview: { student: "Chad Takahashi", interviewer: 2 }
     }
+  },
+  interviewers: {
+  "1": {  
+    "id": 1,
+    "name": "Sylvia Palmer",
+    "avatar": "https://i.imgur.com/LpaY82x.png"
+    },
+  "2": {
+    id: 2,
+    name: "Tori Malcolm",
+    avatar: "https://i.imgur.com/Nmx0Qxo.png"
+    }
   }
 };
 
 const day = "Monday";
+
 export function getAppointmentsForDay(state, day){
   const arr = state.days;
   let dayObj = null;
@@ -42,8 +55,6 @@ export function getAppointmentsForDay(state, day){
   }
   //console.log("dayObj: ", dayObj);
   const appointmentIds = dayObj.appointments;
-  //console.log("appointmentIds: ", appointmentIds);
-  //console.log("state.appointments: ", state.appointments);
   const appointmentsForDay = [];
   for (const id in state.appointments){
     //console.log("id: ", id);
@@ -55,4 +66,44 @@ export function getAppointmentsForDay(state, day){
   //console.log("appointmentsForDay: ", appointmentsForDay);
   return appointmentsForDay;
 };
-console.log(getAppointmentsForDay(state, day));
+
+ export function getInterviewersForDay(state, day){
+  const arr = state.days;
+  console.log("arr: ", arr);
+  let dayObj = null;
+  for (let ele of arr){
+    if (ele.name === day){
+      dayObj = ele;
+    }
+  }
+  console.log("dayObj: ", dayObj);
+  if (!dayObj){
+    return [];
+  }
+  const interviewerIds = dayObj.appointments;
+  console.log("interviewerIds: ", interviewerIds);
+  const interviewersForDay = [];
+  for (const id in state.interviewers){
+    if (interviewerIds.includes(Number(id))){
+      interviewersForDay.push(state.interviewers[id]);
+    } 
+  }
+  return interviewersForDay;
+}
+
+//console.log(getInterviewersForDay(state, day));
+
+ export function getInterview(state, interview){
+  //console.log(state.interviewers);
+  if (!interview) {
+    return null;
+  }
+  //console.log("interview.interviewer: ", interview.interviewer);
+  const interviewerInfo = state.interviewers[interview.interviewer];
+  console.log("interviewerInfo: ", interviewerInfo);
+  return {
+    ...interview,
+    interviewer: interviewerInfo
+  }; 
+};
+//console.log(getInterview(state, interview));
