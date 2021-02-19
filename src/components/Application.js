@@ -65,7 +65,44 @@ const setDays = days => {
   setState({ ...state, days });
   setState(prev => ({ ...prev, days }));
 };
-
+ function bookInterview(id, interview){
+  console.log(id, interview);
+  const appointment = {
+  ...state.appointments[id],
+  interview: { ...interview }
+  };
+  const appointments = {
+    ...state.appointments,
+    [id]: appointment
+  };
+  
+  //make PUT request to update the db with interview data
+  return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview})
+  .then((response)=> { 
+    console.log("response: ", response);
+    setState({
+    ...state,
+    appointments
+  })}).catch(()=>console.log("Put error"));
+};
+function cancelInterview(id){
+  console.log(id);
+  const appointment = {
+  ...state.appointments[id],
+  interview: null
+  };
+  const appointments = {
+    ...state.appointments,
+    [id]: appointment
+  };
+  return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+  .then((response)=> { 
+    console.log("response: ", response);
+    setState({
+    ...state,
+    appointments
+  })}).catch(()=>console.log("Put error"));
+}
   useEffect(()=>{
     // const testURL = "/api/days";
     // axios.get(testURL).then(response=>{
@@ -80,15 +117,15 @@ const setDays = days => {
       axios.get('/api/appointments'),
       axios.get('/api/interviewers'),
     ]).then((all) => {
-      console.log("days: ", all[0].data); // first
-      console.log("appointments: ", all[1].data); // second
-      console.log("interviewers: ", all[2].data); // third
+      //console.log("days: ", all[0].data); // first
+      //console.log("appointments: ", all[1].data); // second
+      //console.log("interviewers: ", all[2].data); // third
       setState(prev => ({...prev, days: all[0].data, 
       appointments: all[1].data, 
       interviewers: all[2].data }));
       //setDays(all[0].data);
       //setAppointments(dailyAppointments)
-      console.log(state);
+      //console.log(state);
     });
   }, []);
    
@@ -101,6 +138,10 @@ const setDays = days => {
     interview = {getInterview(state, appointment.interview)}
     time= {appointment.time}
     interviewers = {dailyInterviewers}
+    //passing bookInterview as props to Appointment component
+    bookInterview = {bookInterview}
+    //passing cancelInterview as props to Appointment component
+    cancelInterview = {cancelInterview}
     />
   });
   return (

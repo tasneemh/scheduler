@@ -69,19 +69,19 @@ export function getAppointmentsForDay(state, day){
 
  export function getInterviewersForDay(state, day){
   const arr = state.days;
-  console.log("arr: ", arr);
+  //console.log("arr: ", arr);
   let dayObj = null;
   for (let ele of arr){
     if (ele.name === day){
       dayObj = ele;
     }
   }
-  console.log("dayObj: ", dayObj);
+  //console.log("dayObj: ", dayObj);
   if (!dayObj){
     return [];
   }
   const interviewerIds = dayObj.interviewers;
-  console.log("interviewerIds: ", interviewerIds);
+  //console.log("interviewerIds: ", interviewerIds);
   const interviewersForDay = [];
   for (const id in state.interviewers){
     if (interviewerIds.includes(Number(id))){
@@ -100,7 +100,7 @@ export function getAppointmentsForDay(state, day){
   }
   //console.log("interview.interviewer: ", interview.interviewer);
   const interviewerInfo = state.interviewers[interview.interviewer];
-  console.log("interviewerInfo: ", interviewerInfo);
+  //console.log("interviewerInfo: ", interviewerInfo);
   return {
     ...interview,
     interviewer: interviewerInfo

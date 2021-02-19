@@ -5,15 +5,18 @@ export default function useVisualMode(initial) {
   const [history, setHistory] = useState([initial]);
 
   function transition(newMode, replace = false){
+    console.log("hit transition: ", newMode);
     setHistory();
     if (replace){
       setMode(newMode);
-      setHistory([...history.slice(0, -1), newMode]);
+      //setHistory([...history.slice(0, -1), newMode]);
+      setHistory(prev => ([...prev.slice(0,-1), newMode]));
     } else{
       setMode(newMode);
       //newHistory is new array which is a copy of history array and we have added newMode element
-      const newHistory = [...history, newMode];
-      setHistory(newHistory);
+      // const newHistory = [...history, newMode];
+      // setHistory(newHistory);
+      setHistory(prev => ([...prev, newMode]));
     }
   }
 
