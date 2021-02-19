@@ -80,7 +80,7 @@ export function getAppointmentsForDay(state, day){
   if (!dayObj){
     return [];
   }
-  const interviewerIds = dayObj.appointments;
+  const interviewerIds = dayObj.interviewers;
   console.log("interviewerIds: ", interviewerIds);
   const interviewersForDay = [];
   for (const id in state.interviewers){
