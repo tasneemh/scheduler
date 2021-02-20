@@ -16,7 +16,7 @@ export default function Appointment(props){
   const SHOW = "SHOW";
   const CREATE = "CREATE";
   const SAVING = "SAVING";
-  const DELETE = "DELETE";
+  const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
   const ERROR_SAVE = "ERROR_SAVE";
@@ -34,13 +34,14 @@ export default function Appointment(props){
     //Call the props.bookInterview function with the appointment id and interview as arguments from within the save function. 
     //Within the save function in our Appointment component transition to the SHOW mode after calling props.bookInterview.
     props.bookInterview(props.id, interview).then(()=>{transition(SHOW)})
-    .catch(()=>transition(ERROR_SAVE), true);    
+    .catch(error => transition(ERROR_SAVE, true));    
   };
   function destroy(){
+    transition(DELETING, true);
     props.cancelInterview(props.id)
     .then(()=>{
       transition(EMPTY);
-    }).catch(()=>{transition(ERROR_DELETE)});
+    }).catch(error => {transition(ERROR_DELETE, true)});
 
   }
   //console.log("props: ", props);
@@ -62,10 +63,11 @@ export default function Appointment(props){
       {mode === CREATE && (<Form interviewers={props.interviewers} name = {props.name} onSave = {save} onCancel={back}/>)}
       
       {mode === SAVING && <Status message = "Saving"/>}
-      {mode === DELETE && <Status message="Deleting" />}
+      {mode === DELETING && <Status message="Deleting" />}
       {mode === CONFIRM && <Confirm onCancel= {back} onConfirm = {destroy}/>}
       {mode === EDIT && (<Form interviewers={props.interviewers} name = {props.name} onSave = {save} onCancel={back}/>)}
-      {mode === }
+      {mode === ERROR_SAVE && <Error message = "Could not save appointment." onClose = {back}/>}
+      {mode === ERROR_DELETE && <Error message = "Could not cancel appointment"/>}
     </article>
   );
 }

@@ -107,3 +107,21 @@ export function getAppointmentsForDay(state, day){
   }; 
 };
 //console.log(getInterview(state, interview));
+export function getNewSpotsForDays(state, id){
+  const foundDay = state.days.find(day => day.appointments.includes(id));
+  console.log("foundDay: ", foundDay);
+  const newDays = state.days.map(day=>{
+    if (day.id === foundDay.id){
+      return {
+        ...day,
+        //calculating the length of array
+        spots: day.appointments.filter(id=>state.appointments[id].interview === null).length
+      }
+    } else{
+      //day is an obj
+      return day;
+    }
+  });
+  return newDays;
+};
+
