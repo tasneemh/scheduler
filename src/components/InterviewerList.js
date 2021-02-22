@@ -1,9 +1,9 @@
 import React from "react";
 import InterviewerListItem from "components/InterviewerListItem";
 import "components/InterviewerList.scss"
-
+import PropTypes from "prop-types";
 export default function InterviewerList(props){
-  //console.log(props);
+  
   const interviewersArray = props.interviewers;
   //console.log(interviewersArray);
   /*
@@ -14,7 +14,7 @@ export default function InterviewerList(props){
     { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
     { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }]
   */
-  
+  //Build an array of interviewer list items and render
   const interviewerList = interviewersArray.map(interviewer => <InterviewerListItem 
     key = {interviewer.id}
     name = {interviewer.name}
@@ -31,5 +31,8 @@ export default function InterviewerList(props){
       <ul className = "interviewers__list">{interviewerList}</ul>   
     </section>
   );
-
 }
+//Runtime test to restrict prop types to only accept specific data types i.e. arrays
+InterviewerList.propTypes = {
+  interviewers: PropTypes.array.isRequired
+};

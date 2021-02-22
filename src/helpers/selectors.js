@@ -106,7 +106,8 @@ export function getAppointmentsForDay(state, day){
     interviewer: interviewerInfo
   }; 
 };
-//console.log(getInterview(state, interview));
+
+//updating spots remaining
 export function getNewSpotsForDays(state, id){
   const foundDay = state.days.find(day => day.appointments.includes(id));
   console.log("foundDay: ", foundDay);
