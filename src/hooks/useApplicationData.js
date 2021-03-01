@@ -82,7 +82,7 @@ function cancelInterview(id){
   const newDays = getNewSpotsForDays(newState, id);
   return axios.delete(`http://localhost:8001/api/appointments/${id}`)
   .then((response)=> { 
-    console.log("response: ", response);
+    //console.log("response: ", response);
     // setState({
     // ...state,
     // appointments
